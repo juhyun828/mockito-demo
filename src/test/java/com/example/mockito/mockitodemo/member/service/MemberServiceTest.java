@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
@@ -21,43 +22,45 @@ import java.util.*;
 import static org.mockito.Mockito.when;
 
 //@RunWith(PowerMockRunner.class)
-@RunWith(SpringRunner.class)
-@SpringBootTest
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@ExtendWith(MockitoExtension.class)
 public class MemberServiceTest {
 
-    @SpyBean
-    MemberRepository memberRepository;
+//    @SpyBean
+//    MemberRepository memberRepository;
 
-    @SpyBean
+    @Spy
     MemberService memberService;
 
     @Before
     public void setUp() throws Exception {
-        List<MemberDto> list1 = new ArrayList<>();
-        list1.add(new MemberDto("테스트이름", "서울시 테스트구", "테스트닉네임"));
-        when(memberService.retrieveMemberList()).thenReturn(list1);
+//        List<MemberDto> list1 = new ArrayList<>();
+//        list1.add(new MemberDto("테스트이름", "서울시 테스트구", "테스트닉네임"));
+//        when(memberService.retrieveMemberList()).thenReturn(list1);
 
         List<MemberDto> list2 = new ArrayList<>();
-        list2.add(new MemberDto("테스트이름C", "서울시 테스트구", "테스트닉네임"));
-        when(memberService.retrieveMemberList()).thenReturn(list2);
+        list2.add(new MemberDto("테스트이름P", "서울시 테스트구", "테스트닉네임"));
+        when(memberService.retrieveMemberListPrivate()).thenReturn(list2);
+    }
+
+    @Test
+    public void retrieveMemberListPrivateTest() {
+//        List<MemberDto> list = new ArrayList<>();
+//        list.add(new MemberDto("테스트이름", "서울시 테스트구", "테스트닉네임"));
+//        when(memberService.retrieveMemberList()).thenReturn(list);
+
+        assert(memberService.retrieveMemberListPrivate().get(0).getName().contains("테스트이름P"));
     }
 
     @Test
     public void retrieveMemberListTest() {
 //        List<MemberDto> list = new ArrayList<>();
-//        list.add(new MemberDto("테스트이름", "서울시 테스트구", "테스트닉네임"));
-//        when(memberService.retrieveMemberList()).thenReturn(list);
-
-        assert(memberService.retrieveMemberList().get(0).getName().contains("테스트"));
-    }
-
-    @Test
-    public void retrieveCMemberListTest() {
-//        List<MemberDto> list = new ArrayList<>();
 //        list.add(new MemberDto("테스트이름C", "서울시 테스트구", "테스트닉네임"));
 //        when(memberRepository.retrieveCMemberList()).thenReturn(list);
+        List<MemberDto> list = memberService.retrieveMemberList();
 
-        assert(memberService.retrieveMemberList().get(0).getName().equals("테스트이름C"));
+        assert(list.get(0).getName().equals("테스트이름P"));
     }
 
 //    @Test
